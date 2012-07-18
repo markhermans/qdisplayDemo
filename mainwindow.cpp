@@ -2,39 +2,143 @@
 ****************************************************************************/
 
 #include <QtGui>
+#include <QFont>
 #include <iostream>
 #include <math.h>
 
 #include "mainwindow.h"
 #include "mThread.h"
+#include "mytext.h"
+#include "mysym.h"
+
+int selected_textID = 0;
+int selected_symID = 0;
 
 MainWindow::MainWindow(QWidget *parent)
     : QDialog(parent)
 {
+    int baseX, baseY;
+    int offsetX, offsetY;
+
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
 
     threadA.someMethod();
 
-    QGraphicsPixmapItem *bg = new QGraphicsPixmapItem(QPixmap(":/images/adi_600_600.jpg"));
-//    QGraphicsPixmapItem *bg0 = new QGraphicsPixmapItem(QPixmap(":/images/background_m1.jpg"));
-//    QGraphicsPixmapItem *bg1 = new QGraphicsPixmapItem(QPixmap(":/images/adi_land.jpg"));
+    QGraphicsPixmapItem *bg = new QGraphicsPixmapItem(QPixmap(":/images/background_blk.jpg"));
     QGraphicsPixmapItem *fg = new QGraphicsPixmapItem(QPixmap(":/images/adi_360_480.jpg"));
-//    QGraphicsPixmapItem *fg2 = new QGraphicsPixmapItem(QPixmap(":/images/gimp.jpg"));
+    MyText *t1_T   = new MyText("QRST");
+    MyText *t2_T   = new MyText("QRST");
+    MyText *t3_T   = new MyText("QRST");
+    MyText *t4_T   = new MyText("QRST");
+    MyText *t5_T   = new MyText("QRST");
+
+    MyText *t1_L   = new MyText("ABCD");
+    MyText *t2_L   = new MyText("ABCD");
+    MyText *t3_L   = new MyText("ABCD");
+    MyText *t4_L   = new MyText("SYM1");
+    MyText *t5_L   = new MyText("SYM2");
+    MyText *t6_L   = new MyText("SYM3");
+    MyText *t7_L   = new MyText("ABCD");
+    MyText *t8_L   = new MyText("ABCD");
+    MyText *t9_L   = new MyText("ABCD");
+    MyText *t10_L  = new MyText("ABCD");
+
+    MyText *t1_B   = new MyText("LEFT");
+    MyText *t2_B   = new MyText("RIGHT");
+    MyText *t3_B   = new MyText(" UP ");
+    MyText *t4_B   = new MyText("DOWN");
+    MyText *t5_B   = new MyText("ROTATE");
+
+    MyText *t1_R   = new MyText("IJKL");
+    MyText *t2_R   = new MyText("IJKL");
+    MyText *t3_R   = new MyText("IJKL");
+    MyText *t4_R   = new MyText("IJKL");
+    MyText *t5_R   = new MyText("IJKL");
+    MyText *t6_R   = new MyText("IJKL");
+    MyText *t7_R   = new MyText("IJKL");
+    MyText *t8_R   = new MyText("IJKL");
+    MyText *t9_R   = new MyText("IJKL");
+    MyText *t10_R  = new MyText("IJKL");
+
+
+    MySym *sym1 = new MySym(1);
+    MySym *sym2 = new MySym(2);
+    MySym *sym3 = new MySym(3);
+    t4_L->setSymbol(sym1);
+    t4_L->setSymbolSelector(true);
+    t5_L->setSymbol(sym2);
+    t5_L->setSymbolSelector(true);
+    t6_L->setSymbol(sym3);
+    t6_L->setSymbolSelector(true);
+
+    t1_B->setSymbol(sym1, sym2, sym3);
+    t1_B->setSymbolMover(true);
+    t1_B->setAction(1);  //left
+
+    t2_B->setSymbol(sym1, sym2, sym3);
+    t2_B->setSymbolMover(true);
+    t2_B->setAction(2);  //right
+
+    t3_B->setSymbol(sym1, sym2, sym3);
+    t3_B->setSymbolMover(true);
+    t3_B->setAction(3);  //up
+
+    t4_B->setSymbol(sym1, sym2, sym3);
+    t4_B->setSymbolMover(true);
+    t4_B->setAction(4);  //down
+
+    t5_B->setSymbol(sym1, sym2, sym3);
+    t5_B->setSymbolMover(true);
+    t5_B->setAction(5);  //rotate
+
 
     scene = new QGraphicsScene;
     scene->setItemIndexMethod(QGraphicsScene::NoIndex);
-    scene->addItem(bg);
-//    scene->addItem(bg0);
-//    scene->addItem(bg1);
-    scene->addItem(fg);
-//    scene->addItem(fg2);
+    scene->addItem(bg);     // 0
+    scene->addItem(fg);     // 1
+    scene->addItem(t1_T);   // 2 - 6
+    scene->addItem(t2_T);
+    scene->addItem(t3_T);
+    scene->addItem(t4_T);
+    scene->addItem(t5_T);
+
+    scene->addItem(t1_L);   // 7 - 16
+    scene->addItem(t2_L);
+    scene->addItem(t3_L);
+    scene->addItem(t4_L);   // 10
+    scene->addItem(t5_L);   // 11
+    scene->addItem(t6_L);   // 12
+    scene->addItem(t7_L);
+    scene->addItem(t8_L);
+    scene->addItem(t9_L);
+    scene->addItem(t10_L);
+
+    scene->addItem(t1_B);   // 17 - 21
+    scene->addItem(t2_B);
+    scene->addItem(t3_B);
+    scene->addItem(t4_B);
+    scene->addItem(t5_B);
+
+    scene->addItem(t1_R);   // 22 - 31
+    scene->addItem(t2_R);
+    scene->addItem(t3_R);
+    scene->addItem(t4_R);
+    scene->addItem(t5_R);
+    scene->addItem(t6_R);
+    scene->addItem(t7_R);
+    scene->addItem(t8_R);
+    scene->addItem(t9_R);
+    scene->addItem(t10_R);
+
+    scene->addItem(sym1);   // 32 - 34
+    scene->addItem(sym2);
+    scene->addItem(sym3);
 
     view = new QGraphicsView(scene);
     view->setRenderHint(QPainter::Antialiasing);
     view->setCacheMode(QGraphicsView::CacheBackground);
     view->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     view->setDragMode(QGraphicsView::ScrollHandDrag);
-//    view->setStyleSheet("background-color: transparent;");
 
     moveButton = new QPushButton(tr("&Move"));
     connect(moveButton, SIGNAL(clicked()), this, SLOT(move()));
@@ -46,8 +150,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
 
     QHBoxLayout *hlayout = new QHBoxLayout;
-    hlayout->addWidget(moveButton);
-    hlayout->addWidget(threadButton);
+//    hlayout->addWidget(moveButton);
+//    hlayout->addWidget(threadButton);
     hlayout->addWidget(closeButton);
 
     QVBoxLayout *vlayout = new QVBoxLayout;
@@ -55,13 +159,68 @@ MainWindow::MainWindow(QWidget *parent)
     vlayout->addLayout(hlayout);
     setLayout(vlayout);
 
-    fg->setPos(120,60);
-    fg->rotate(53.13);
-    fg->setPos(384,12);
+    fg->setPos(100,125);
+
+    // top labels
+    baseX = 75;
+    baseY = 0;
+    offsetX = 88;
+    t1_T->setPos(baseX, baseY);
+    t2_T->setPos(baseX+offsetX, baseY);
+    t3_T->setPos(baseX+2*offsetX, baseY);
+    t4_T->setPos(baseX+3*offsetX, baseY);
+    t5_T->setPos(baseX+4*offsetX, baseY);
+
+    // left side labels
+    baseX = 0;
+    baseY = 78; //100;
+    offsetY = 60; //61;
+    t1_L->setPos(baseX, baseY);
+    t2_L->setPos(baseX, baseY + offsetY);
+    t3_L->setPos(baseX, baseY + 2*offsetY);
+    t4_L->setPos(baseX, baseY + 3*offsetY);
+    t5_L->setPos(baseX, baseY + 4*offsetY);
+    t6_L->setPos(baseX, baseY + 5*offsetY);
+    t7_L->setPos(baseX, baseY + 6*offsetY);
+    t8_L->setPos(baseX, baseY + 7*offsetY);
+    t9_L->setPos(baseX, baseY + 8*offsetY);
+    t10_L->setPos(baseX, baseY + 9*offsetY);
+
+    // bottom labels
+    baseX = 75;
+    baseY = 685;
+    offsetX = 88;
+    t1_B->setPos(baseX, baseY);
+    t2_B->setPos(baseX+offsetX, baseY);
+    t3_B->setPos(baseX+2*offsetX, baseY);
+    t4_B->setPos(baseX+3*offsetX, baseY);
+    t5_B->setPos(baseX+4*offsetX, baseY);
+
+    // right side labels
+    baseX = 514;
+    baseY = 78;
+    offsetY = 60;
+    t1_R->setPos(baseX, baseY);
+    t2_R->setPos(baseX, baseY + offsetY);
+    t3_R->setPos(baseX, baseY + 2*offsetY);
+    t4_R->setPos(baseX, baseY + 3*offsetY);
+    t5_R->setPos(baseX, baseY + 4*offsetY);
+    t6_R->setPos(baseX, baseY + 5*offsetY);
+    t7_R->setPos(baseX, baseY + 6*offsetY);
+    t8_R->setPos(baseX, baseY + 7*offsetY);
+    t9_R->setPos(baseX, baseY + 8*offsetY);
+    t10_R->setPos(baseX, baseY + 9*offsetY);
+
+    sym1->setPos(250,250);
+    sym2->setPos(300,300);
+    sym3->setPos(325,225);
+
+//    fg->rotate(53.13);
+//    fg->setPos(384,12);
 
 //    timer = new QTimer();
 //    connect(timer, SIGNAL(timeout()), this, SLOT(move()));
-//    timer->start(1000/33);
+//    timer->start(100);
 
     setWindowTitle(tr("A Dialog"));
 }
@@ -85,15 +244,30 @@ void MainWindow::move()
 {
     QList<QGraphicsItem *> syms = scene->items();
 
-    QPointF pos1 = syms[2]->scenePos();
-    float dx = float(qrand() % 11)/10.0;
-    float dy = float(qrand() % 18)/10.0;
-    syms[2]->setPos(pos1.rx()+dx,pos1.ry()+dy);
+    printf("have %d items\n", syms.count());
 
-    QPointF pos2 = syms[3]->scenePos();
-    float dx2 = float(qrand() % 12)/10.0;
-    float dy2 = float(qrand() % 9)/10.0;
-    syms[3]->setPos(pos2.rx()+dx2,pos2.ry()+dy2);
+    syms[0]->setSelected(true);
+
+    // interested in text symbols 10-12
+    if (syms[10]->isSelected())
+    {
+        selected_textID = 10;
+        selected_symID = 32;
+//        sym1->setSelected(true);
+    }
+    else if (syms[11]->isSelected())
+    {
+        selected_textID = 11;
+        selected_symID = 33;
+//        sym2->setSelected(true);
+    }
+    else if (syms[12]->isSelected())
+    {
+        selected_textID = 12;
+        selected_symID = 34;
+//        sym3->setSelected(true);
+    }
+
 }
 
 void MainWindow::startOrStopThread()

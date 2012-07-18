@@ -1,11 +1,15 @@
 HEADERS += \
     mainwindow.h \
-    mThread.h
+    mThread.h \
+    mytext.h \
+    mysym.h
 
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    mThread.cpp
+    mThread.cpp \
+    mytext.cpp \
+    mysym.cpp
 
 RESOURCES += \
         dispDemo.qrc

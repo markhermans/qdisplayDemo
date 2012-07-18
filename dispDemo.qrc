@@ -9,5 +9,10 @@
         <file>images/adi_land.jpg</file>
         <file>images/adi_360_480.jpg</file>
         <file>images/adi_600_600.jpg</file>
+        <file>images/adi_red.jpg</file>
+        <file>images/background_blk.jpg</file>
+        <file>images/background_660_780.jpg</file>
+        <file>images/background_560_680.jpg</file>
+        <file>images/background_560_730.jpg</file>
     </qresource>
 </RCC>
