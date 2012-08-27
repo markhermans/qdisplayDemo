@@ -1,6 +1,7 @@
 displayDemo
 displayDemo.pro
 Makefile
+*.swp
 *.[oa]
 *~
 *.moc
