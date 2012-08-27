@@ -165,6 +165,7 @@ void MyText::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void MyText::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    printf("mytext: mouse release\n");
     Pressed = false;
     if (!SymbolSelector)
     {
@@ -191,3 +192,132 @@ void MyText::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     QGraphicsTextItem::mouseReleaseEvent(event);
 }
 
+void MyText::doPressTxt()
+{
+    Pressed = true;
+    if (SymbolMover && Action != 0)
+    {
+        if (Action == 1) // left
+        {
+            QPointF pos;
+            if (SymbolRef1->isSelected())
+            {
+                pos = SymbolRef1->pos();
+                SymbolRef1->setPos(pos.rx()-10, pos.ry());
+            }
+            if (SymbolRef2->isSelected())
+            {
+                pos = SymbolRef2->pos();
+                SymbolRef2->setPos(pos.rx()-10, pos.ry());
+            }
+            if (SymbolRef3->isSelected())
+            {
+                pos = SymbolRef3->pos();
+                SymbolRef3->setPos(pos.rx()-10, pos.ry());
+            }
+        }
+        if (Action == 2) // right
+        {
+            QPointF pos;
+            if (SymbolRef1->isSelected())
+            {
+                pos = SymbolRef1->pos();
+                SymbolRef1->setPos(pos.rx()+10, pos.ry());
+            }
+            if (SymbolRef2->isSelected())
+            {
+                pos = SymbolRef2->pos();
+                SymbolRef2->setPos(pos.rx()+10, pos.ry());
+            }
+            if (SymbolRef3->isSelected())
+            {
+                pos = SymbolRef3->pos();
+                SymbolRef3->setPos(pos.rx()+10, pos.ry());
+            }
+        }
+        if (Action == 3) // up
+        {
+            QPointF pos;
+            if (SymbolRef1->isSelected())
+            {
+                pos = SymbolRef1->pos();
+                SymbolRef1->setPos(pos.rx(), pos.ry()-10);
+            }
+            if (SymbolRef2->isSelected())
+            {
+                pos = SymbolRef2->pos();
+                SymbolRef2->setPos(pos.rx(), pos.ry()-10);
+            }
+            if (SymbolRef3->isSelected())
+            {
+                pos = SymbolRef3->pos();
+                SymbolRef3->setPos(pos.rx(), pos.ry()-10);
+            }
+        }
+        if (Action == 4) // down
+        {
+            QPointF pos;
+            if (SymbolRef1->isSelected())
+            {
+                pos = SymbolRef1->pos();
+                SymbolRef1->setPos(pos.rx(), pos.ry()+10);
+            }
+            if (SymbolRef2->isSelected())
+            {
+                pos = SymbolRef2->pos();
+                SymbolRef2->setPos(pos.rx(), pos.ry()+10);
+            }
+            if (SymbolRef3->isSelected())
+            {
+                pos = SymbolRef3->pos();
+                SymbolRef3->setPos(pos.rx(), pos.ry()+10);
+            }
+        }
+        if (Action == 5) // rotate
+        {
+            QPointF pos;
+            if (SymbolRef1->isSelected())
+            {
+                pos = SymbolRef1->pos();
+                SymbolRef1->rotate(15);
+            }
+            if (SymbolRef2->isSelected())
+            {
+                pos = SymbolRef2->pos();
+                SymbolRef2->rotate(15);
+            }
+            if (SymbolRef3->isSelected())
+            {
+                pos = SymbolRef3->pos();
+                SymbolRef3->rotate(15);
+            }
+        }
+    }
+    update();
+}
+
+void MyText::doReleaseTxt()
+{
+    Pressed = false;
+    if (!SymbolSelector)
+    {
+        update();
+        return;
+    }
+
+    if (Selected)
+    {
+        Selected = false;
+        setDefaultTextColor(QColor(255,255,255,255));
+    }
+    else
+    {
+        Selected = true;
+        setDefaultTextColor(QColor(0,255,0,255));
+    }
+
+    if (SymbolRef1 && SymbolSelector)
+        SymbolRef1->setSelected(Selected);
+
+    update();
+}

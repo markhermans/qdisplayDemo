@@ -28,6 +28,9 @@ public:
     void setAction(int action); //1=left,2=right,3=up,4=down,5=rotate
     bool isSelected();
 
+    void doPressTxt();
+    void doReleaseTxt();
+
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);

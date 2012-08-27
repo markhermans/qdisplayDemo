@@ -5,6 +5,7 @@
 #define MAINWINDOW_H
 
 #include <QDialog>
+#include <QKeyEvent>
 #include "mThread.h"
 
 QT_BEGIN_NAMESPACE
@@ -24,6 +25,8 @@ public:
 
 protected:
     void closeEvent(QCloseEvent *event);
+    void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
 
 private slots:
     void move();

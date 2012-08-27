@@ -283,3 +283,78 @@ void MainWindow::startOrStopThread()
         threadButton->setText(tr("Stop Thread"));
     }
 }
+
+void MainWindow::keyPressEvent(QKeyEvent *evt)
+{
+    if ((evt->key() != 0x50) &&   // button 0
+        (evt->key() != 0x4f) &&   // button 1
+        (evt->key() != 0x4e) &&   // button 2
+        (evt->key() != 0x1000015) &&  // button 10
+        (evt->key() != 0x42) &&       // button 11
+        (evt->key() != 0x41) &&       // button 12
+        (evt->key() != 0x1000014) &&  // button 13
+        (evt->key() != 0x1000012))    // button 14
+    {
+        QWidget::keyPressEvent(evt);
+        return;
+    }
+
+    QList<QGraphicsItem *> syms = scene->items();
+
+    MyText *textItem;
+    switch (evt->key())
+    {
+        case 0x50:      textItem = (MyText *)syms[10]; break;
+        case 0x4f:      textItem = (MyText *)syms[11]; break;
+        case 0x4e:      textItem = (MyText *)syms[12]; break;
+        case 0x1000015: textItem = (MyText *)syms[17]; break;
+        case 0x42:      textItem = (MyText *)syms[18]; break;
+        case 0x41:      textItem = (MyText *)syms[19]; break;
+        case 0x1000014: textItem = (MyText *)syms[20]; break;
+        case 0x1000012: textItem = (MyText *)syms[21]; break;
+	default:
+	   return;
+    }
+
+    textItem->doPressTxt();
+}
+
+void MainWindow::keyReleaseEvent(QKeyEvent *evt)
+{
+    if ((evt->key() != 0x50) &&   // button 0
+        (evt->key() != 0x4f) &&   // button 1
+        (evt->key() != 0x4e) &&   // button 2
+        (evt->key() != 0x1000015) &&  // button 10
+        (evt->key() != 0x42) &&       // button 11
+        (evt->key() != 0x41) &&       // button 12
+        (evt->key() != 0x1000014) &&  // button 13
+        (evt->key() != 0x1000012))    // button 14
+    {
+        QWidget::keyReleaseEvent(evt);
+        return;
+    }
+
+    QList<QGraphicsItem *> syms = scene->items();
+
+    MyText *textItem;
+    switch (evt->key())
+    {
+        case 0x50:      textItem = (MyText *)syms[10]; break;
+        case 0x4f:      textItem = (MyText *)syms[11]; break;
+        case 0x4e:      textItem = (MyText *)syms[12]; break;
+        case 0x1000015: textItem = (MyText *)syms[17]; break;
+        case 0x42:      textItem = (MyText *)syms[18]; break;
+        case 0x41:      textItem = (MyText *)syms[19]; break;
+        case 0x1000014: textItem = (MyText *)syms[20]; break;
+        case 0x1000012: textItem = (MyText *)syms[21]; break;
+	default:
+	   return;
+    }
+
+    // no press event for this key, so do a 'press' action
+    if (evt->key() == 0x1000015)
+    {
+        textItem->doPressTxt();
+    }
+    textItem->doReleaseTxt();
+}
