@@ -1,6 +1,11 @@
+displayDemo
+displayDemo.pro
+Makefile
 *.[oa]
 *~
 *.moc
 *.pro.user
+moc_*
+qrc_*
 release/
 debug/
