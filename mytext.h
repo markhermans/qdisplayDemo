@@ -23,7 +23,6 @@ public:
 
     void setSelected(bool select);
     void setSymbol(MySym *sym1, MySym *sym2 = NULL, MySym *sym3 = NULL);
-    void setSymbolSelector(bool selector);
     void setSymbolMover(bool mover);
     void setAction(int action); //1=left,2=right,3=up,4=down,5=rotate
     bool isSelected();

@@ -12,7 +12,7 @@ public:
     QRectF boundingRect()const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-    void setSelected(bool select);
+    void toggleSelect();
     bool isSelected();
 
     int SymID;

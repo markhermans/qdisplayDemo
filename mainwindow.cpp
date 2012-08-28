@@ -35,9 +35,9 @@ MainWindow::MainWindow(QWidget *parent)
     MyText *t1_L   = new MyText("ABCD");
     MyText *t2_L   = new MyText("ABCD");
     MyText *t3_L   = new MyText("ABCD");
-    MyText *t4_L   = new MyText("SYM1");
-    MyText *t5_L   = new MyText("SYM2");
-    MyText *t6_L   = new MyText("SYM3");
+    MyText *t4_L   = new MyText("ABCD");
+    MyText *t5_L   = new MyText("ABCD");
+    MyText *t6_L   = new MyText("ABCD");
     MyText *t7_L   = new MyText("ABCD");
     MyText *t8_L   = new MyText("ABCD");
     MyText *t9_L   = new MyText("ABCD");
@@ -64,12 +64,6 @@ MainWindow::MainWindow(QWidget *parent)
     MySym *sym1 = new MySym(1);
     MySym *sym2 = new MySym(2);
     MySym *sym3 = new MySym(3);
-    t4_L->setSymbol(sym1);
-    t4_L->setSymbolSelector(true);
-    t5_L->setSymbol(sym2);
-    t5_L->setSymbolSelector(true);
-    t6_L->setSymbol(sym3);
-    t6_L->setSymbolSelector(true);
 
     t1_B->setSymbol(sym1, sym2, sym3);
     t1_B->setSymbolMover(true);
@@ -304,19 +298,35 @@ void MainWindow::keyPressEvent(QKeyEvent *evt)
     MyText *textItem;
     switch (evt->key())
     {
-        case 0x50:      textItem = (MyText *)syms[10]; break;
-        case 0x4f:      textItem = (MyText *)syms[11]; break;
-        case 0x4e:      textItem = (MyText *)syms[12]; break;
-        case 0x1000015: textItem = (MyText *)syms[17]; break;
-        case 0x42:      textItem = (MyText *)syms[18]; break;
-        case 0x41:      textItem = (MyText *)syms[19]; break;
-        case 0x1000014: textItem = (MyText *)syms[20]; break;
-        case 0x1000012: textItem = (MyText *)syms[21]; break;
-	default:
-	   return;
-    }
+        case 0x50:
+        case 0x4f:
+        case 0x4e:
+			NULL;
+		break;
+        case 0x1000015:
+			textItem = (MyText *)syms[17];
+			textItem->doPressTxt();
+		break;
+        case 0x42:
+			textItem = (MyText *)syms[18];
+			textItem->doPressTxt();
+		break;
+        case 0x41:
+			textItem = (MyText *)syms[19];
+			textItem->doPressTxt();
+		break;
+        case 0x1000014:
+			textItem = (MyText *)syms[20];
+			textItem->doPressTxt();
+		break;
+        case 0x1000012:
+			textItem = (MyText *)syms[21];
+			textItem->doPressTxt();
+		break;
 
-    textItem->doPressTxt();
+		default:
+		   NULL;
+    }
 }
 
 void MainWindow::keyReleaseEvent(QKeyEvent *evt)
@@ -337,24 +347,44 @@ void MainWindow::keyReleaseEvent(QKeyEvent *evt)
     QList<QGraphicsItem *> syms = scene->items();
 
     MyText *textItem;
+	MySym  *symItem;
     switch (evt->key())
     {
-        case 0x50:      textItem = (MyText *)syms[10]; break;
-        case 0x4f:      textItem = (MyText *)syms[11]; break;
-        case 0x4e:      textItem = (MyText *)syms[12]; break;
-        case 0x1000015: textItem = (MyText *)syms[17]; break;
-        case 0x42:      textItem = (MyText *)syms[18]; break;
-        case 0x41:      textItem = (MyText *)syms[19]; break;
-        case 0x1000014: textItem = (MyText *)syms[20]; break;
-        case 0x1000012: textItem = (MyText *)syms[21]; break;
-	default:
-	   return;
-    }
+        case 0x50:
+			symItem = (MySym *)syms[32];
+			symItem->toggleSelect();
+		break;
+        case 0x4f:
+			symItem = (MySym *)syms[33];
+			symItem->toggleSelect();
+		break;
+        case 0x4e:
+			symItem = (MySym *)syms[34];
+			symItem->toggleSelect();
+		break;
+        case 0x1000015: // no 'press' event for this key
+			textItem = (MyText *)syms[17];
+			textItem->doPressTxt();
+			textItem->doReleaseTxt();
+		break;
+        case 0x42:
+			textItem = (MyText *)syms[18];
+			textItem->doReleaseTxt();
+		break;
+        case 0x41:
+			textItem = (MyText *)syms[19];
+			textItem->doReleaseTxt();
+		break;
+        case 0x1000014:
+			textItem = (MyText *)syms[20];
+			textItem->doReleaseTxt();
+		break;
+        case 0x1000012:
+			textItem = (MyText *)syms[21];
+			textItem->doReleaseTxt();
+		break;
 
-    // no press event for this key, so do a 'press' action
-    if (evt->key() == 0x1000015)
-    {
-        textItem->doPressTxt();
+		default:
+		   NULL;
     }
-    textItem->doReleaseTxt();
 }

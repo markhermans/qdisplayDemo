@@ -10,7 +10,6 @@ MyText::MyText(const QString &text, int pixelSize)
     SymbolRef1 = (MySym*)NULL;
     SymbolRef2 = (MySym*)NULL;
     SymbolRef3 = (MySym*)NULL;
-    SymbolSelector = false;
     SymbolMover    = false;
     Action = 0; // no action
 
@@ -36,11 +35,6 @@ void MyText::setSymbol(MySym *sym1, MySym *sym2, MySym *sym3)
     SymbolRef1 = sym1;
     SymbolRef2 = sym2;
     SymbolRef3 = sym3;
-}
-
-void MyText::setSymbolSelector(bool selector)
-{
-    SymbolSelector = selector;
 }
 
 void MyText::setSymbolMover(bool mover)
@@ -165,29 +159,7 @@ void MyText::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void MyText::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    printf("mytext: mouse release\n");
     Pressed = false;
-    if (!SymbolSelector)
-    {
-        update();
-        QGraphicsTextItem::mouseReleaseEvent(event);
-        return;
-    }
-
-    if (Selected)
-    {
-        Selected = false;
-        setDefaultTextColor(QColor(255,255,255,255));
-    }
-    else
-    {
-        Selected = true;
-        setDefaultTextColor(QColor(0,255,0,255));
-    }
-
-    if (SymbolRef1 && SymbolSelector)
-        SymbolRef1->setSelected(Selected);
-
     update();
     QGraphicsTextItem::mouseReleaseEvent(event);
 }
@@ -299,25 +271,5 @@ void MyText::doPressTxt()
 void MyText::doReleaseTxt()
 {
     Pressed = false;
-    if (!SymbolSelector)
-    {
-        update();
-        return;
-    }
-
-    if (Selected)
-    {
-        Selected = false;
-        setDefaultTextColor(QColor(255,255,255,255));
-    }
-    else
-    {
-        Selected = true;
-        setDefaultTextColor(QColor(0,255,0,255));
-    }
-
-    if (SymbolRef1 && SymbolSelector)
-        SymbolRef1->setSelected(Selected);
-
     update();
 }
