@@ -140,17 +140,8 @@ MainWindow::MainWindow(QWidget *parent)
     threadButton = new QPushButton(tr("&Start Thread"));
     connect(threadButton, SIGNAL(clicked()), this, SLOT(startOrStopThread()));
 
-    closeButton = new QPushButton(tr("&Close"));
-    connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
-
-    QHBoxLayout *hlayout = new QHBoxLayout;
-//    hlayout->addWidget(moveButton);
-//    hlayout->addWidget(threadButton);
-    hlayout->addWidget(closeButton);
-
     QVBoxLayout *vlayout = new QVBoxLayout;
     vlayout->addWidget(view);
-    vlayout->addLayout(hlayout);
     setLayout(vlayout);
 
     fg->setPos(100,125);
@@ -334,6 +325,7 @@ void MainWindow::keyReleaseEvent(QKeyEvent *evt)
     if ((evt->key() != 0x50) &&   // button 0
         (evt->key() != 0x4f) &&   // button 1
         (evt->key() != 0x4e) &&   // button 2
+        (evt->key() != 0x49) &&   // button 5
         (evt->key() != 0x1000015) &&  // button 10
         (evt->key() != 0x42) &&       // button 11
         (evt->key() != 0x41) &&       // button 12
@@ -343,6 +335,12 @@ void MainWindow::keyReleaseEvent(QKeyEvent *evt)
         QWidget::keyReleaseEvent(evt);
         return;
     }
+
+	if (evt->key() == 0x49)
+	{
+		MainWindow::close();
+		return;
+	}
 
     QList<QGraphicsItem *> syms = scene->items();
 
