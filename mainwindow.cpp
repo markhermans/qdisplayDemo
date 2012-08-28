@@ -112,6 +112,8 @@ MainWindow::MainWindow(QWidget *parent)
     view->setCacheMode(QGraphicsView::CacheBackground);
     view->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     view->setDragMode(QGraphicsView::ScrollHandDrag);
+    view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     moveButton = new QPushButton(tr("&Move"));
     connect(moveButton, SIGNAL(clicked()), this, SLOT(move()));
@@ -127,7 +129,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // top labels
     baseX = 75;
-    baseY = 0;
+    baseY = 25;
     offsetX = 88;
     t1_T->setPos(baseX, baseY);
     t2_T->setPos(baseX+offsetX, baseY);
@@ -137,8 +139,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     // left side labels
     baseX = 0;
-    baseY = 78; //100;
-    offsetY = 60; //61;
+    baseY = 112; //100;
+    offsetY = 52; //61;
     t1_L->setPos(baseX, baseY);
     t2_L->setPos(baseX, baseY + offsetY);
     t3_L->setPos(baseX, baseY + 2*offsetY);
@@ -152,7 +154,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // bottom labels
     baseX = 75;
-    baseY = 685;
+    baseY = 660; //685;
     offsetX = 88;
     t1_B->setPos(baseX, baseY);
     t2_B->setPos(baseX+offsetX, baseY);
@@ -162,8 +164,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     // right side labels
     baseX = 514;
-    baseY = 78;
-    offsetY = 60;
+    baseY = 112;
+    offsetY = 52;
     t1_R->setPos(baseX, baseY);
     t2_R->setPos(baseX, baseY + offsetY);
     t3_R->setPos(baseX, baseY + 2*offsetY);
@@ -187,6 +189,12 @@ MainWindow::MainWindow(QWidget *parent)
 //    timer->start(100);
 
     setWindowTitle(tr("A Dialog"));
+    QRect myGeometry = this->geometry();
+    this->setGeometry(
+	myGeometry.x()+325,
+	myGeometry.y()+30,
+	myGeometry.width(),
+	myGeometry.height()+200);
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
