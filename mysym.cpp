@@ -56,6 +56,46 @@ bool MySym::isSelected()
     return Selected;
 }
 
+void MySym::moveLeft()
+{
+	QPointF pos;
+
+	pos = this->pos();
+	this->setPos(pos.rx()-10, pos.ry());
+}
+
+void MySym::moveRight()
+{
+	QPointF pos;
+
+	pos = this->pos();
+	this->setPos(pos.rx()+10, pos.ry());
+}
+
+void MySym::moveUp()
+{
+	QPointF pos;
+
+	pos = this->pos();
+	this->setPos(pos.rx(), pos.ry()-10);
+}
+
+void MySym::moveDown()
+{
+	QPointF pos;
+
+	pos = this->pos();
+	this->setPos(pos.rx(), pos.ry()+10);
+}
+
+void MySym::moveRotate()
+{
+	QPointF pos;
+
+	pos = this->pos();
+	this->rotate(15);
+}
+
 void MySym::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     Pressed = true;

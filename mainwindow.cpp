@@ -43,11 +43,11 @@ MainWindow::MainWindow(QWidget *parent)
     MyText *t9_L   = new MyText("ABCD");
     MyText *t10_L  = new MyText("ABCD");
 
-    MyText *t1_B   = new MyText("LEFT");
-    MyText *t2_B   = new MyText("RIGHT");
-    MyText *t3_B   = new MyText(" UP ");
-    MyText *t4_B   = new MyText("DOWN");
-    MyText *t5_B   = new MyText("ROTATE");
+    MyText *t1_B   = new MyText("UVWX");
+    MyText *t2_B   = new MyText("UVWX");
+    MyText *t3_B   = new MyText("UVWX");
+    MyText *t4_B   = new MyText("UVWX");
+    MyText *t5_B   = new MyText("UVWX");
 
     MyText *t1_R   = new MyText("IJKL");
     MyText *t2_R   = new MyText("IJKL");
@@ -64,27 +64,6 @@ MainWindow::MainWindow(QWidget *parent)
     MySym *sym1 = new MySym(1);
     MySym *sym2 = new MySym(2);
     MySym *sym3 = new MySym(3);
-
-    t1_B->setSymbol(sym1, sym2, sym3);
-    t1_B->setSymbolMover(true);
-    t1_B->setAction(1);  //left
-
-    t2_B->setSymbol(sym1, sym2, sym3);
-    t2_B->setSymbolMover(true);
-    t2_B->setAction(2);  //right
-
-    t3_B->setSymbol(sym1, sym2, sym3);
-    t3_B->setSymbolMover(true);
-    t3_B->setAction(3);  //up
-
-    t4_B->setSymbol(sym1, sym2, sym3);
-    t4_B->setSymbolMover(true);
-    t4_B->setAction(4);  //down
-
-    t5_B->setSymbol(sym1, sym2, sym3);
-    t5_B->setSymbolMover(true);
-    t5_B->setAction(5);  //rotate
-
 
     scene = new QGraphicsScene;
     scene->setItemIndexMethod(QGraphicsScene::NoIndex);
@@ -271,53 +250,7 @@ void MainWindow::startOrStopThread()
 
 void MainWindow::keyPressEvent(QKeyEvent *evt)
 {
-    if ((evt->key() != 0x50) &&   // button 0
-        (evt->key() != 0x4f) &&   // button 1
-        (evt->key() != 0x4e) &&   // button 2
-        (evt->key() != 0x1000015) &&  // button 10
-        (evt->key() != 0x42) &&       // button 11
-        (evt->key() != 0x41) &&       // button 12
-        (evt->key() != 0x1000014) &&  // button 13
-        (evt->key() != 0x1000012))    // button 14
-    {
-        QWidget::keyPressEvent(evt);
-        return;
-    }
-
-    QList<QGraphicsItem *> syms = scene->items();
-
-    MyText *textItem;
-    switch (evt->key())
-    {
-        case 0x50:
-        case 0x4f:
-        case 0x4e:
-			NULL;
-		break;
-        case 0x1000015:
-			textItem = (MyText *)syms[17];
-			textItem->doPressTxt();
-		break;
-        case 0x42:
-			textItem = (MyText *)syms[18];
-			textItem->doPressTxt();
-		break;
-        case 0x41:
-			textItem = (MyText *)syms[19];
-			textItem->doPressTxt();
-		break;
-        case 0x1000014:
-			textItem = (MyText *)syms[20];
-			textItem->doPressTxt();
-		break;
-        case 0x1000012:
-			textItem = (MyText *)syms[21];
-			textItem->doPressTxt();
-		break;
-
-		default:
-		   NULL;
-    }
+	QWidget::keyPressEvent(evt);
 }
 
 void MainWindow::keyReleaseEvent(QKeyEvent *evt)
@@ -344,42 +277,61 @@ void MainWindow::keyReleaseEvent(QKeyEvent *evt)
 
     QList<QGraphicsItem *> syms = scene->items();
 
-    MyText *textItem;
-	MySym  *symItem;
+	MySym  *symItem1, *symItem2, *symItem3;
+	symItem1 = (MySym *)syms[32];
+	symItem2 = (MySym *)syms[33];
+	symItem3 = (MySym *)syms[34];
+
     switch (evt->key())
     {
         case 0x50:
-			symItem = (MySym *)syms[32];
-			symItem->toggleSelect();
+			symItem1->toggleSelect();
 		break;
         case 0x4f:
-			symItem = (MySym *)syms[33];
-			symItem->toggleSelect();
+			symItem2->toggleSelect();
 		break;
         case 0x4e:
-			symItem = (MySym *)syms[34];
-			symItem->toggleSelect();
+			symItem3->toggleSelect();
 		break;
-        case 0x1000015: // no 'press' event for this key
-			textItem = (MyText *)syms[17];
-			textItem->doPressTxt();
-			textItem->doReleaseTxt();
+        case 0x1000015: // left
+			if (symItem1->isSelected())
+				symItem1->moveLeft();
+			if (symItem2->isSelected())
+				symItem2->moveLeft();
+			if (symItem3->isSelected())
+				symItem3->moveLeft();
 		break;
-        case 0x42:
-			textItem = (MyText *)syms[18];
-			textItem->doReleaseTxt();
+        case 0x42:      // right
+			if (symItem1->isSelected())
+				symItem1->moveRight();
+			if (symItem2->isSelected())
+				symItem2->moveRight();
+			if (symItem3->isSelected())
+				symItem3->moveRight();
 		break;
-        case 0x41:
-			textItem = (MyText *)syms[19];
-			textItem->doReleaseTxt();
+        case 0x41:      // up
+			if (symItem1->isSelected())
+				symItem1->moveUp();
+			if (symItem2->isSelected())
+				symItem2->moveUp();
+			if (symItem3->isSelected())
+				symItem3->moveUp();
 		break;
-        case 0x1000014:
-			textItem = (MyText *)syms[20];
-			textItem->doReleaseTxt();
+        case 0x1000014: // down
+			if (symItem1->isSelected())
+				symItem1->moveDown();
+			if (symItem2->isSelected())
+				symItem2->moveDown();
+			if (symItem3->isSelected())
+				symItem3->moveDown();
 		break;
-        case 0x1000012:
-			textItem = (MyText *)syms[21];
-			textItem->doReleaseTxt();
+        case 0x1000012: // rotate
+			if (symItem1->isSelected())
+				symItem1->moveRotate();
+			if (symItem2->isSelected())
+				symItem2->moveRotate();
+			if (symItem3->isSelected())
+				symItem3->moveRotate();
 		break;
 
 		default:

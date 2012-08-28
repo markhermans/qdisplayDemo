@@ -14,6 +14,11 @@ public:
 
     void toggleSelect();
     bool isSelected();
+    void moveLeft();
+    void moveRight();
+    void moveUp();
+    void moveDown();
+    void moveRotate();
 
     int SymID;
     bool Pressed;
