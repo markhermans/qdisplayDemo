@@ -21,12 +21,7 @@ public:
     void moveRotate();
 
     int SymID;
-    bool Pressed;
     bool Selected;
-    
-protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 };
 
 #endif // MYSYM_H

@@ -4,7 +4,6 @@
 MySym::MySym(int id)
 {
     SymID = id;
-    Pressed = false;
     Selected = false;
 //    setFlag(QGraphicsItem::ItemIsSelectable);
 }
@@ -94,18 +93,4 @@ void MySym::moveRotate()
 
 	pos = this->pos();
 	this->rotate(15);
-}
-
-void MySym::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
-    Pressed = true;
-    update();
-    QGraphicsItem::mousePressEvent(event);
-}
-
-void MySym::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
-{
-    Pressed = false;
-    update();
-    QGraphicsItem::mouseReleaseEvent(event);
 }
