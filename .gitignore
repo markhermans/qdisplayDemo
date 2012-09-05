@@ -5,7 +5,8 @@ Makefile
 *.[oa]
 *~
 *.moc
-*.pro.user
+*.pro.user*
+*.pro
 moc_*
 qrc_*
 release/
