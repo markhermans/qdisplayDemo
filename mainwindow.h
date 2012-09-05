@@ -32,16 +32,10 @@ private slots:
     void move();
     void about();
     void startOrStopThread();
-    void doSymbolSelect();
     void doVideoBoot();        // left buttons
     void doShowMap();
-    void doMoveRotate();
-    void doMoveLeft();
     void doTargetSelect();     // right buttons
     void doFlightVideo();
-    void doMoveUp();
-    void doMoveRight();
-    void doMoveDown();
 
 private:
     Thread threadA;
@@ -56,6 +50,9 @@ private:
     QPushButton *moveButton;
     QPushButton *threadButton;
     QPushButton *closeButton;
+
+signals:
+    void mainKeyPress();
 };
 
 #endif
