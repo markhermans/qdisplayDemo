@@ -12,6 +12,7 @@ public:
     QRectF boundingRect()const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
+    void setSelected(bool selected);
     void toggleSelect();
     bool isSelected();
     void moveLeft();

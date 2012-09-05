@@ -64,6 +64,9 @@ MainWindow::MainWindow(QWidget *parent)
     MySym *sym1 = new MySym(1);
     MySym *sym2 = new MySym(2);
     MySym *sym3 = new MySym(3);
+    sym1->setSelected(true);
+    sym2->setSelected(false);
+    sym3->setSelected(false);
 
     scene = new QGraphicsScene;
     scene->setItemIndexMethod(QGraphicsScene::NoIndex);
@@ -107,6 +110,7 @@ MainWindow::MainWindow(QWidget *parent)
     scene->addItem(sym2);
     scene->addItem(sym3);
 
+
     view = new QGraphicsView(scene);
     view->setRenderHint(QPainter::Antialiasing);
     view->setCacheMode(QGraphicsView::CacheBackground);
@@ -115,15 +119,95 @@ MainWindow::MainWindow(QWidget *parent)
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    moveButton = new QPushButton(tr("&Move"));
-    connect(moveButton, SIGNAL(clicked()), this, SLOT(move()));
+
+    // left button group
+    QPushButton *videoBootButton = new QPushButton("1");
+    QAction *videoBootAction = new QAction(tr("1"), this);
+    videoBootAction->setShortcut(tr("j"));
+    connect(videoBootAction, SIGNAL(triggered()), this, SLOT(doVideoBoot()));
+    videoBootButton->addAction(videoBootAction);
+
+    QPushButton *showMapButton = new QPushButton("3");
+    QAction *showMapAction = new QAction(tr("3"), this);
+    showMapAction->setShortcut(tr("k"));
+    connect(showMapAction, SIGNAL(triggered()), this, SLOT(doShowMap()));
+    showMapButton->addAction(showMapAction);
+
+    QPushButton *moveRotateButton = new QPushButton("Ro");
+    QAction *moveRotateAction = new QAction(tr("Ro"), this);
+    moveRotateAction->setShortcut(tr("n"));
+    connect(moveRotateAction, SIGNAL(triggered()), this, SLOT(doMoveRotate()));
+    moveRotateButton->addAction(moveRotateAction);
+
+    QPushButton *moveLeftButton = new QPushButton("<-");
+    QAction *moveLeftAction = new QAction(tr("<-"), this);
+    moveLeftAction->setShortcut(tr("o"));
+    connect(moveLeftAction, SIGNAL(triggered()), this, SLOT(doMoveLeft()));
+    moveLeftButton->addAction(moveLeftAction);
+
+    QPushButton *exitAppButton = new QPushButton("Exit");
+    QAction *exitAppAction = new QAction(tr("Exit"), this);
+    exitAppAction->setShortcut(tr("p"));
+    connect(exitAppAction, SIGNAL(triggered()), this, SLOT(close()));
+    exitAppButton->addAction(exitAppAction);
+
+    QVBoxLayout *leftButtonGroup = new QVBoxLayout;
+    leftButtonGroup->addWidget(videoBootButton);
+    leftButtonGroup->addWidget(showMapButton);
+    leftButtonGroup->addWidget(moveRotateButton);
+    leftButtonGroup->addWidget(moveLeftButton);
+    leftButtonGroup->addWidget(exitAppButton);
+
+
+    // right button group
+    QPushButton *targetSelectButton = new QPushButton("2");
+    QAction *targetSelectAction = new QAction(tr("2"), this);
+    targetSelectAction->setShortcut(Qt::Key_Left);
+    connect(targetSelectAction, SIGNAL(triggered()), this, SLOT(doTargetSelect()));
+    targetSelectButton->addAction(targetSelectAction);
+
+    QPushButton *flightVideoButton = new QPushButton("4");
+    QAction *flightVideoAction = new QAction(tr("4"), this);
+    flightVideoAction->setShortcut(Qt::Key_Right);
+    connect(flightVideoAction, SIGNAL(triggered()), this, SLOT(doFlightVideo()));
+    flightVideoButton->addAction(flightVideoAction);
+
+    QPushButton *moveUpButton = new QPushButton("^");
+    QAction *moveUpAction = new QAction(tr("^"), this);
+    moveUpAction->setShortcut(tr("a"));
+    connect(moveUpAction, SIGNAL(triggered()), this, SLOT(doMoveUp()));
+    moveUpButton->addAction(moveUpAction);
+
+    QPushButton *moveRightButton = new QPushButton("->");
+    QAction *moveRightAction = new QAction(tr("->"), this);
+    moveRightAction->setShortcut(tr("b"));
+    connect(moveRightAction, SIGNAL(triggered()), this, SLOT(doMoveRight()));
+    moveRightButton->addAction(moveRightAction);
+
+    QPushButton *moveDownButton = new QPushButton("V");
+    QAction *moveDownAction = new QAction(tr("V"), this);
+    moveDownAction->setShortcut(Qt::Key_Down);
+    connect(moveDownAction, SIGNAL(triggered()), this, SLOT(doMoveDown()));
+    moveDownButton->addAction(moveDownAction);
+
+    QVBoxLayout *rightButtonGroup = new QVBoxLayout;
+    rightButtonGroup->addWidget(targetSelectButton);
+    rightButtonGroup->addWidget(flightVideoButton);
+    rightButtonGroup->addWidget(moveUpButton);
+    rightButtonGroup->addWidget(moveRightButton);
+    rightButtonGroup->addWidget(moveDownButton);
+
+
+//    connect(moveButton, SIGNAL(clicked()), this, SLOT(move()));
 
     threadButton = new QPushButton(tr("&Start Thread"));
     connect(threadButton, SIGNAL(clicked()), this, SLOT(startOrStopThread()));
 
-    QVBoxLayout *vlayout = new QVBoxLayout;
-    vlayout->addWidget(view);
-    setLayout(vlayout);
+    QHBoxLayout *hlayout = new QHBoxLayout;
+    hlayout->addLayout(leftButtonGroup);
+    hlayout->addWidget(view);
+    hlayout->addLayout(rightButtonGroup);
+    setLayout(hlayout);
 
     fg->setPos(100,125);
 
@@ -212,6 +296,141 @@ void MainWindow::about()
                "toolbars, and a status bar."));
 }
 
+
+void MainWindow::doSymbolSelect()
+{
+    QList<QGraphicsItem *> syms = scene->items();
+
+    MySym  *symItem1, *symItem2, *symItem3;
+    symItem1 = (MySym *)syms[32];
+    symItem2 = (MySym *)syms[33];
+    symItem3 = (MySym *)syms[34];
+
+    if (symItem1->isSelected())
+    {
+        symItem1->setSelected(false);
+        symItem2->setSelected(true);
+    }
+    else if (symItem2->isSelected())
+    {
+        symItem2->setSelected(false);
+        symItem3->setSelected(true);
+    }
+    else
+    {
+        symItem3->setSelected(false);
+        symItem1->setSelected(true);
+    }
+}
+
+// left buttons
+void MainWindow::doVideoBoot()
+{
+    printf("video boot\n");
+}
+
+void MainWindow::doShowMap()
+{
+    printf("show map\n");
+}
+
+void MainWindow::doMoveRotate()
+{
+    QList<QGraphicsItem *> syms = scene->items();
+
+    MySym  *symItem1, *symItem2, *symItem3;
+    symItem1 = (MySym *)syms[32];
+    symItem2 = (MySym *)syms[33];
+    symItem3 = (MySym *)syms[34];
+
+    if (symItem1->isSelected())
+        symItem1->moveRotate();
+    if (symItem2->isSelected())
+        symItem2->moveRotate();
+    if (symItem3->isSelected())
+        symItem3->moveRotate();
+}
+
+void MainWindow::doMoveLeft()
+{
+    QList<QGraphicsItem *> syms = scene->items();
+
+    MySym  *symItem1, *symItem2, *symItem3;
+    symItem1 = (MySym *)syms[32];
+    symItem2 = (MySym *)syms[33];
+    symItem3 = (MySym *)syms[34];
+
+    if (symItem1->isSelected())
+        symItem1->moveLeft();
+    if (symItem2->isSelected())
+        symItem2->moveLeft();
+    if (symItem3->isSelected())
+        symItem3->moveLeft();
+}
+
+// right buttons
+void MainWindow::doTargetSelect()
+{
+    printf("target select\n");
+}
+
+void MainWindow::doFlightVideo()
+{
+    printf("flight video\n");
+}
+
+void MainWindow::doMoveUp()
+{
+    QList<QGraphicsItem *> syms = scene->items();
+
+    MySym  *symItem1, *symItem2, *symItem3;
+    symItem1 = (MySym *)syms[32];
+    symItem2 = (MySym *)syms[33];
+    symItem3 = (MySym *)syms[34];
+
+    if (symItem1->isSelected())
+        symItem1->moveUp();
+    if (symItem2->isSelected())
+        symItem2->moveUp();
+    if (symItem3->isSelected())
+        symItem3->moveUp();
+}
+
+void MainWindow::doMoveRight()
+{
+    QList<QGraphicsItem *> syms = scene->items();
+
+    MySym  *symItem1, *symItem2, *symItem3;
+    symItem1 = (MySym *)syms[32];
+    symItem2 = (MySym *)syms[33];
+    symItem3 = (MySym *)syms[34];
+
+    if (symItem1->isSelected())
+        symItem1->moveRight();
+    if (symItem2->isSelected())
+        symItem2->moveRight();
+    if (symItem3->isSelected())
+        symItem3->moveRight();
+}
+
+void MainWindow::doMoveDown()
+{
+    QList<QGraphicsItem *> syms = scene->items();
+
+    MySym  *symItem1, *symItem2, *symItem3;
+    symItem1 = (MySym *)syms[32];
+    symItem2 = (MySym *)syms[33];
+    symItem3 = (MySym *)syms[34];
+
+    if (symItem1->isSelected())
+        symItem1->moveDown();
+    if (symItem2->isSelected())
+        symItem2->moveDown();
+    if (symItem3->isSelected())
+        symItem3->moveDown();
+}
+
+
 void MainWindow::move()
 {
     QList<QGraphicsItem *> syms = scene->items();
@@ -263,86 +482,11 @@ void MainWindow::keyPressEvent(QKeyEvent *evt)
 
 void MainWindow::keyReleaseEvent(QKeyEvent *evt)
 {
-    if ((evt->key() != 0x50) &&   // button 0
-        (evt->key() != 0x4f) &&   // button 1
-        (evt->key() != 0x4e) &&   // button 2
-        (evt->key() != 0x49) &&   // button 5
-        (evt->key() != 0x1000015) &&  // button 10
-        (evt->key() != 0x42) &&       // button 11
-        (evt->key() != 0x41) &&       // button 12
-        (evt->key() != 0x1000014) &&  // button 13
-        (evt->key() != 0x1000012))    // button 14
+    if (evt->key() != Qt::Key_Up)
     {
         QWidget::keyReleaseEvent(evt);
         return;
     }
 
-	if (evt->key() == 0x49)
-	{
-		MainWindow::close();
-		return;
-	}
-
-    QList<QGraphicsItem *> syms = scene->items();
-
-	MySym  *symItem1, *symItem2, *symItem3;
-	symItem1 = (MySym *)syms[32];
-	symItem2 = (MySym *)syms[33];
-	symItem3 = (MySym *)syms[34];
-
-    switch (evt->key())
-    {
-        case 0x50:
-			symItem1->toggleSelect();
-		break;
-        case 0x4f:
-			symItem2->toggleSelect();
-		break;
-        case 0x4e:
-			symItem3->toggleSelect();
-		break;
-        case 0x1000015: // left
-			if (symItem1->isSelected())
-				symItem1->moveLeft();
-			if (symItem2->isSelected())
-				symItem2->moveLeft();
-			if (symItem3->isSelected())
-				symItem3->moveLeft();
-		break;
-        case 0x42:      // right
-			if (symItem1->isSelected())
-				symItem1->moveRight();
-			if (symItem2->isSelected())
-				symItem2->moveRight();
-			if (symItem3->isSelected())
-				symItem3->moveRight();
-		break;
-        case 0x41:      // up
-			if (symItem1->isSelected())
-				symItem1->moveUp();
-			if (symItem2->isSelected())
-				symItem2->moveUp();
-			if (symItem3->isSelected())
-				symItem3->moveUp();
-		break;
-        case 0x1000014: // down
-			if (symItem1->isSelected())
-				symItem1->moveDown();
-			if (symItem2->isSelected())
-				symItem2->moveDown();
-			if (symItem3->isSelected())
-				symItem3->moveDown();
-		break;
-        case 0x1000012: // rotate
-			if (symItem1->isSelected())
-				symItem1->moveRotate();
-			if (symItem2->isSelected())
-				symItem2->moveRotate();
-			if (symItem3->isSelected())
-				symItem3->moveRotate();
-		break;
-
-		default:
-		   NULL;
-    }
+    doSymbolSelect();
 }

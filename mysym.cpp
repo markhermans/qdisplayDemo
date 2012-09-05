@@ -44,6 +44,12 @@ void MySym::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     painter->drawRect(rec);
 }
 
+void MySym::setSelected(bool selected)
+{
+    Selected = selected;
+    update();
+}
+
 void MySym::toggleSelect()
 {
     Selected = (Selected == true)?false:true;
