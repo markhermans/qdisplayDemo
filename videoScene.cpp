@@ -3,9 +3,9 @@
 
 #include <QtGui>
 
-#include "bootScene.h"
+#include "videoScene.h"
 
-BootScene::BootScene(QWidget *parent, QString filename)
+VideoScene::VideoScene(QWidget *parent, QString filename)
 {
     m_VideoWidget = new Phonon::VideoWidget();
     m_AudioOutput = new Phonon::AudioOutput(Phonon::VideoCategory);
@@ -25,17 +25,17 @@ BootScene::BootScene(QWidget *parent, QString filename)
 //    this->addWidget(m_VideoWidget);
 }
 
-void BootScene::initialize()
+void VideoScene::initialize()
 {
     // nothing going on here
 }
 
-void BootScene::play()
+void VideoScene::play()
 {
 	m_MediaObject->play();
 }
 
-void BootScene::pause()
+void VideoScene::pause()
 {
 	m_MediaObject->pause();
 }

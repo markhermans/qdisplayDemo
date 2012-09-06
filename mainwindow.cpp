@@ -11,7 +11,7 @@
 #include "mytext.h"
 #include "mysym.h"
 #include "targetScene.h"
-#include "bootScene.h"
+#include "videoScene.h"
 #include "mapScene.h"
 
 int selected_textID = 0;
@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
     threadA.someMethod();
 
     TargetScene *scene = new TargetScene();
-    BootScene *scene_videoBoot = new BootScene(this, "./file.mp4");
+    VideoScene *scene_videoBoot = new VideoScene(this, "./file.mp4");
     MapScene *scene_mapShow = new MapScene("./file.jpg");
 
     view = new QGraphicsView(scene);

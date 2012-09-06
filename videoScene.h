@@ -1,19 +1,19 @@
 /****************************************************************************
 ****************************************************************************/
 
-#ifndef BOOTSCENE_H
-#define BOOTSCENE_H
+#ifndef VIDEOSCENE_H
+#define VIDEOSCENE_H
 
 #include <QGraphicsScene>
 #include <phonon/Phonon>
 
 
-class BootScene : public QGraphicsScene
+class VideoScene : public QGraphicsScene
 {
     Q_OBJECT
 
 public:
-    BootScene(QWidget *parent, QString filename);
+    VideoScene(QWidget *parent, QString filename);
 
     void initialize();
 
