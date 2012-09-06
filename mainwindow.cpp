@@ -49,6 +49,7 @@ MainWindow::MainWindow(QWidget *parent)
     videoBoot_view->setDragMode(QGraphicsView::ScrollHandDrag);
     videoBoot_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     videoBoot_view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    printf("video boot size: %f x %f\n", videoBoot_view->sceneRect().width(), videoBoot_view->sceneRect().height());
 
     showMap_view = new QGraphicsView(scene_mapShow);
     showMap_view->setRenderHint(QPainter::Antialiasing);
@@ -57,6 +58,7 @@ MainWindow::MainWindow(QWidget *parent)
     showMap_view->setDragMode(QGraphicsView::ScrollHandDrag);
     showMap_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     showMap_view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    printf("show map size: %f x %f\n", showMap_view->sceneRect().width(), showMap_view->sceneRect().height());
 
     videoFlight_view = new QGraphicsView(scene_videoFlight);
     videoFlight_view->setRenderHint(QPainter::Antialiasing);
@@ -65,6 +67,7 @@ MainWindow::MainWindow(QWidget *parent)
     videoFlight_view->setDragMode(QGraphicsView::ScrollHandDrag);
     videoFlight_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     videoFlight_view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    printf("video flight size: %f x %f\n", videoFlight_view->sceneRect().width(), videoFlight_view->sceneRect().height());
 
     connect(this, SIGNAL(mainKeyPress()), scene, SLOT(doSymbolSelect()));
     connect(this, SIGNAL(playBootVideo()), scene_videoBoot, SLOT(play()));
@@ -178,12 +181,6 @@ MainWindow::MainWindow(QWidget *parent)
 //    timer->start(100);
 
     setWindowTitle(tr("A Dialog"));
-    QRect myGeometry = this->geometry();
-    this->setGeometry(
-    myGeometry.x()+325,
-	myGeometry.y()+30,
-	myGeometry.width(),
-	myGeometry.height()+200);
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)

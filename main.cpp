@@ -57,6 +57,9 @@ int main(int argc, char *argv[])
 #else
     mainWin.show();
 #endif
+    mainWin.setGeometry(250,0,770,720);
+    printf("Window size: %d x %d\n", mainWin.width(), mainWin.height());
+
     return app.exec();
 }
 //! [0]
