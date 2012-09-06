@@ -45,6 +45,9 @@ private:
     void createStatusBar();
 
     QGraphicsView *view;
+    QGraphicsView *videoBoot_view;
+    QGraphicsView *showMap_view;
+    QGraphicsView *flightVideo_view;
     QGraphicsScene *scene;
 
     QPushButton *moveButton;
@@ -53,6 +56,8 @@ private:
 
 signals:
     void mainKeyPress();
+    void playBootVideo();
+    void pauseBootVideo();
 };
 
 #endif

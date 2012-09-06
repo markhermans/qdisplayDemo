@@ -11,9 +11,15 @@
 #include "mytext.h"
 #include "mysym.h"
 #include "targetScene.h"
+#include "bootScene.h"
+#include "mapScene.h"
 
 int selected_textID = 0;
 int selected_symID = 0;
+bool isTargetSelectVisible = true;
+bool isVideoBootVisible = false;
+bool isShowMapVisible = false;
+bool isFlightVideoVisible = false;
 
 MainWindow::MainWindow(QWidget *parent)
     : QDialog(parent)
@@ -23,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent)
     threadA.someMethod();
 
     TargetScene *scene = new TargetScene();
+    BootScene *scene_videoBoot = new BootScene(this, "./file.mp4");
+    MapScene *scene_mapShow = new MapScene("./file.jpg");
 
     view = new QGraphicsView(scene);
     view->setRenderHint(QPainter::Antialiasing);
@@ -31,8 +39,35 @@ MainWindow::MainWindow(QWidget *parent)
     view->setDragMode(QGraphicsView::ScrollHandDrag);
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    printf("target select size: %f x %f\n", view->sceneRect().width(), view->sceneRect().height());
+
+    videoBoot_view = new QGraphicsView(scene_videoBoot);
+    videoBoot_view->setRenderHint(QPainter::Antialiasing);
+    videoBoot_view->setCacheMode(QGraphicsView::CacheBackground);
+    videoBoot_view->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
+    videoBoot_view->setDragMode(QGraphicsView::ScrollHandDrag);
+    videoBoot_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    videoBoot_view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    showMap_view = new QGraphicsView(scene_mapShow);
+    showMap_view->setRenderHint(QPainter::Antialiasing);
+    showMap_view->setCacheMode(QGraphicsView::CacheBackground);
+    showMap_view->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
+    showMap_view->setDragMode(QGraphicsView::ScrollHandDrag);
+    showMap_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    showMap_view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+//    flightVideo_view = new QGraphicsView(scene_1);
+//    flightVideo_view->setRenderHint(QPainter::Antialiasing);
+//    flightVideo_view->setCacheMode(QGraphicsView::CacheBackground);
+//    flightVideo_view->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
+//    flightVideo_view->setDragMode(QGraphicsView::ScrollHandDrag);
+//    flightVideo_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+//    flightVideo_view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     connect(this, SIGNAL(mainKeyPress()), scene, SLOT(doSymbolSelect()));
+    connect(this, SIGNAL(playBootVideo()), scene_videoBoot, SLOT(play()));
+    connect(this, SIGNAL(pauseBootVideo()), scene_videoBoot, SLOT(pause()));
 
     // left button group
     QPushButton *videoBootButton = new QPushButton("1");
@@ -117,13 +152,23 @@ MainWindow::MainWindow(QWidget *parent)
     threadButton = new QPushButton(tr("&Start Thread"));
     connect(threadButton, SIGNAL(clicked()), this, SLOT(startOrStopThread()));
 
+    view->show();
+    videoBoot_view->hide();
+    showMap_view->hide();
+//    flightVideo_view->hide();
+
+
     QHBoxLayout *hlayout = new QHBoxLayout;
     hlayout->addLayout(leftButtonGroup);
     hlayout->addWidget(view);
+    hlayout->addWidget(videoBoot_view);
+    hlayout->addWidget(showMap_view);
+//    hlayout->addWidget(flightVideo_view);
     hlayout->addLayout(rightButtonGroup);
     setLayout(hlayout);
 
     scene->initialize();
+    scene_videoBoot->initialize();
 
 //    timer = new QTimer();
 //    connect(timer, SIGNAL(timeout()), this, SLOT(move()));
@@ -132,7 +177,7 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowTitle(tr("A Dialog"));
     QRect myGeometry = this->geometry();
     this->setGeometry(
-	myGeometry.x()+325,
+    myGeometry.x()+325,
 	myGeometry.y()+30,
 	myGeometry.width(),
 	myGeometry.height()+200);
@@ -157,19 +202,82 @@ void MainWindow::about()
 // left buttons
 void MainWindow::doVideoBoot()
 {
-    printf("video boot\n");
+    if (isVideoBootVisible)
+        return;
+
+    if (isTargetSelectVisible)
+    {
+        view->hide();
+        isTargetSelectVisible = false;
+    }
+    else if (isShowMapVisible)
+    {
+        showMap_view->hide();
+        isShowMapVisible = false;
+    }
+    else // (isFlightVideoVisible)
+    {
+        flightVideo_view->hide();
+        isFlightVideoVisible = false;
+    }
+
+    isVideoBootVisible = true;
+    videoBoot_view->show();
+    emit playBootVideo();
 }
 
 void MainWindow::doShowMap()
 {
-    printf("show map\n");
+    if (isShowMapVisible)
+        return;
+
+    if (isVideoBootVisible)
+    {
+        videoBoot_view->hide();
+        emit pauseBootVideo();
+        isVideoBootVisible = false;
+    }
+    else if (isTargetSelectVisible)
+    {
+        view->hide();
+        isTargetSelectVisible = false;
+    }
+    else // (isFlightVideoVisible)
+    {
+        flightVideo_view->hide();
+        isFlightVideoVisible = false;
+    }
+
+    isShowMapVisible = true;
+    showMap_view->show();
 }
 
 
 // right buttons
 void MainWindow::doTargetSelect()
 {
-    printf("target select\n");
+    if (isTargetSelectVisible)
+        return;
+
+    if (isVideoBootVisible)
+    {
+        videoBoot_view->hide();
+        emit pauseBootVideo();
+        isVideoBootVisible = false;
+    }
+    else if (isShowMapVisible)
+    {
+        showMap_view->hide();
+        isShowMapVisible = false;
+    }
+    else // (isFlightVideoVisible)
+    {
+        flightVideo_view->hide();
+        isFlightVideoVisible = false;
+    }
+
+    isTargetSelectVisible = true;
+    view->show();
 }
 
 void MainWindow::doFlightVideo()
