@@ -35,7 +35,7 @@ private slots:
     void doVideoBoot();        // left buttons
     void doShowMap();
     void doTargetSelect();     // right buttons
-    void doFlightVideo();
+    void doVideoFlight();
 
 private:
     Thread threadA;
@@ -44,10 +44,10 @@ private:
     void createActions();
     void createStatusBar();
 
-    QGraphicsView *view;
+    QGraphicsView *targetSelect_view;
     QGraphicsView *videoBoot_view;
     QGraphicsView *showMap_view;
-    QGraphicsView *flightVideo_view;
+    QGraphicsView *videoFlight_view;
     QGraphicsScene *scene;
 
     QPushButton *moveButton;
@@ -58,6 +58,8 @@ signals:
     void mainKeyPress();
     void playBootVideo();
     void pauseBootVideo();
+    void playFlightVideo();
+    void pauseFlightVideo();
 };
 
 #endif
