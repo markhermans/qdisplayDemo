@@ -29,8 +29,7 @@ TargetScene::TargetScene()
     t6_L   = new MyText("ABCD");
     t7_L   = new MyText("ABCD");
     t8_L   = new MyText("ABCD");
-    t9_L   = new MyText("ABCD");
-    t10_L  = new MyText("ABCD");
+
 
     t1_B   = new MyText("UVWX");
     t2_B   = new MyText("UVWX");
@@ -46,8 +45,7 @@ TargetScene::TargetScene()
     t6_R   = new MyText("IJKL");
     t7_R   = new MyText("IJKL");
     t8_R   = new MyText("IJKL");
-    t9_R   = new MyText("IJKL");
-    t10_R  = new MyText("IJKL");
+
 
 
     sym1 = new MySym(1);
@@ -74,16 +72,15 @@ TargetScene::TargetScene()
     this->addItem(t6_L);   // 12
     this->addItem(t7_L);
     this->addItem(t8_L);
-    this->addItem(t9_L);
-    this->addItem(t10_L);
 
-    this->addItem(t1_B);   // 17 - 21
+
+    this->addItem(t1_B);   // 15 - 19
     this->addItem(t2_B);
     this->addItem(t3_B);
     this->addItem(t4_B);
     this->addItem(t5_B);
 
-    this->addItem(t1_R);   // 22 - 31
+    this->addItem(t1_R);   // 20 - 29
     this->addItem(t2_R);
     this->addItem(t3_R);
     this->addItem(t4_R);
@@ -91,10 +88,9 @@ TargetScene::TargetScene()
     this->addItem(t6_R);
     this->addItem(t7_R);
     this->addItem(t8_R);
-    this->addItem(t9_R);
-    this->addItem(t10_R);
 
-    this->addItem(sym1);   // 32 - 34
+
+    this->addItem(sym1);   // 28 - 30
     this->addItem(sym2);
     this->addItem(sym3);
 }
@@ -104,11 +100,11 @@ void TargetScene::initialize()
     int baseX, baseY;
     int offsetX, offsetY;
 
-    fg->setPos(100,125);
+    fg->setPos(100,115);
 
     // top labels
     baseX = 75;
-    baseY = 25;
+    baseY = 0;
     offsetX = 88;
     t1_T->setPos(baseX, baseY);
     t2_T->setPos(baseX+offsetX, baseY);
@@ -118,8 +114,8 @@ void TargetScene::initialize()
 
     // left side labels
     baseX = 0;
-    baseY = 112; //100;
-    offsetY = 52; //61;
+    baseY = 74; //100;
+    offsetY = 75; //61;
     t1_L->setPos(baseX, baseY);
     t2_L->setPos(baseX, baseY + offsetY);
     t3_L->setPos(baseX, baseY + 2*offsetY);
@@ -128,12 +124,11 @@ void TargetScene::initialize()
     t6_L->setPos(baseX, baseY + 5*offsetY);
     t7_L->setPos(baseX, baseY + 6*offsetY);
     t8_L->setPos(baseX, baseY + 7*offsetY);
-    t9_L->setPos(baseX, baseY + 8*offsetY);
-    t10_L->setPos(baseX, baseY + 9*offsetY);
+
 
     // bottom labels
     baseX = 75;
-    baseY = 660; //685;
+    baseY = 665; //685;
     offsetX = 88;
     t1_B->setPos(baseX, baseY);
     t2_B->setPos(baseX+offsetX, baseY);
@@ -143,8 +138,8 @@ void TargetScene::initialize()
 
     // right side labels
     baseX = 514;
-    baseY = 112;
-    offsetY = 52;
+    baseY = 74;
+    offsetY = 75;
     t1_R->setPos(baseX, baseY);
     t2_R->setPos(baseX, baseY + offsetY);
     t3_R->setPos(baseX, baseY + 2*offsetY);
@@ -153,8 +148,7 @@ void TargetScene::initialize()
     t6_R->setPos(baseX, baseY + 5*offsetY);
     t7_R->setPos(baseX, baseY + 6*offsetY);
     t8_R->setPos(baseX, baseY + 7*offsetY);
-    t9_R->setPos(baseX, baseY + 8*offsetY);
-    t10_R->setPos(baseX, baseY + 9*offsetY);
+
 
     sym1->setPos(250,250);
     sym2->setPos(300,300);
@@ -167,9 +161,11 @@ void TargetScene::doSymbolSelect()
     QList<QGraphicsItem *> syms = this->items();
 
     MySym  *symItem1, *symItem2, *symItem3;
-    symItem1 = (MySym *)syms[32];
-    symItem2 = (MySym *)syms[33];
-    symItem3 = (MySym *)syms[34];
+    int pos = 28;
+
+    symItem1 = (MySym *)syms[pos];
+    symItem2 = (MySym *)syms[pos+1];
+    symItem3 = (MySym *)syms[pos+2];
 
     if (symItem1->isSelected())
     {
@@ -194,9 +190,11 @@ void TargetScene::moveLeft()
     QList<QGraphicsItem *> syms = this->items();
 
     MySym  *symItem1, *symItem2, *symItem3;
-    symItem1 = (MySym *)syms[32];
-    symItem2 = (MySym *)syms[33];
-    symItem3 = (MySym *)syms[34];
+    int pos = 28;
+
+    symItem1 = (MySym *)syms[pos];
+    symItem2 = (MySym *)syms[pos+1];
+    symItem3 = (MySym *)syms[pos+2];
 
     if (symItem1->isSelected())
         symItem1->moveLeft();
@@ -211,9 +209,11 @@ void TargetScene::moveRight()
     QList<QGraphicsItem *> syms = this->items();
 
     MySym  *symItem1, *symItem2, *symItem3;
-    symItem1 = (MySym *)syms[32];
-    symItem2 = (MySym *)syms[33];
-    symItem3 = (MySym *)syms[34];
+    int pos = 28;
+
+    symItem1 = (MySym *)syms[pos];
+    symItem2 = (MySym *)syms[pos+1];
+    symItem3 = (MySym *)syms[pos+2];
 
     if (symItem1->isSelected())
         symItem1->moveRight();
@@ -228,9 +228,11 @@ void TargetScene::moveUp()
     QList<QGraphicsItem *> syms = this->items();
 
     MySym  *symItem1, *symItem2, *symItem3;
-    symItem1 = (MySym *)syms[32];
-    symItem2 = (MySym *)syms[33];
-    symItem3 = (MySym *)syms[34];
+    int pos = 28;
+
+    symItem1 = (MySym *)syms[pos];
+    symItem2 = (MySym *)syms[pos+1];
+    symItem3 = (MySym *)syms[pos+2];
 
     if (symItem1->isSelected())
         symItem1->moveUp();
@@ -245,9 +247,11 @@ void TargetScene::moveDown()
     QList<QGraphicsItem *> syms = this->items();
 
     MySym  *symItem1, *symItem2, *symItem3;
-    symItem1 = (MySym *)syms[32];
-    symItem2 = (MySym *)syms[33];
-    symItem3 = (MySym *)syms[34];
+    int pos = 28;
+
+    symItem1 = (MySym *)syms[pos];
+    symItem2 = (MySym *)syms[pos+1];
+    symItem3 = (MySym *)syms[pos+2];
 
     if (symItem1->isSelected())
         symItem1->moveDown();
@@ -262,9 +266,11 @@ void TargetScene::moveRotate()
     QList<QGraphicsItem *> syms = this->items();
 
     MySym  *symItem1, *symItem2, *symItem3;
-    symItem1 = (MySym *)syms[32];
-    symItem2 = (MySym *)syms[33];
-    symItem3 = (MySym *)syms[34];
+    int pos = 28;
+
+    symItem1 = (MySym *)syms[pos];
+    symItem2 = (MySym *)syms[pos+1];
+    symItem3 = (MySym *)syms[pos+2];
 
     if (symItem1->isSelected())
         symItem1->moveRotate();
