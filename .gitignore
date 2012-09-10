@@ -6,7 +6,6 @@ Makefile
 *~
 *.moc
 *.pro.user*
-*.pro
 moc_*
 qrc_*
 release/
