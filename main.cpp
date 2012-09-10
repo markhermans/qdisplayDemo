@@ -45,7 +45,7 @@
 
 int main(int argc, char *argv[])
 {
-    Q_INIT_RESOURCE(dispDemo);
+    Q_INIT_RESOURCE(displayDemo);
 
     QApplication app(argc, argv);
 

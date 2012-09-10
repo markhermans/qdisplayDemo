@@ -19,7 +19,6 @@ SOURCES += main.cpp \
            mThread.cpp \
            mysym.cpp \
            mytext.cpp \
-           qrc_dispDemo.cpp \
            targetScene.cpp \
            videoScene.cpp
 RESOURCES += displayDemo.qrc
