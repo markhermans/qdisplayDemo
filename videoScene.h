@@ -15,6 +15,7 @@ class VideoScene : public QGraphicsScene
 public:
     VideoScene(QWidget *parent, QString filename);
 
+    void setScaleToRect(const QRectF & rect);
     void initialize();
 
 private slots:
@@ -28,6 +29,8 @@ private:
     Phonon::MediaObject *m_MediaObject;
     Phonon::AudioOutput *m_AudioOutput;
 	Phonon::VideoWidget *m_VideoWidget;
+
+    QGraphicsProxyWidget *videoProxy;
 };
 
 #endif

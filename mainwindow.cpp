@@ -34,6 +34,7 @@ MainWindow::MainWindow(QWidget *parent)
     VideoScene *scene_videoFlight = new VideoScene(this, "./gitFile.mp4");
 
     targetSelect_view = new QGraphicsView(scene);
+    targetSelect_view->setSceneRect(scene->sceneRect());
     targetSelect_view->setRenderHint(QPainter::Antialiasing);
     targetSelect_view->setCacheMode(QGraphicsView::CacheBackground);
     targetSelect_view->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
@@ -43,6 +44,7 @@ MainWindow::MainWindow(QWidget *parent)
     printf("target select size: %f x %f\n", targetSelect_view->sceneRect().width(), targetSelect_view->sceneRect().height());
 
     videoBoot_view = new QGraphicsView(scene_videoBoot);
+    videoBoot_view->setSceneRect(scene->sceneRect());
     videoBoot_view->setRenderHint(QPainter::Antialiasing);
     videoBoot_view->setCacheMode(QGraphicsView::CacheBackground);
     videoBoot_view->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
@@ -52,6 +54,7 @@ MainWindow::MainWindow(QWidget *parent)
     printf("video boot size: %f x %f\n", videoBoot_view->sceneRect().width(), videoBoot_view->sceneRect().height());
 
     showMap_view = new QGraphicsView(scene_mapShow);
+    showMap_view->setSceneRect(scene->sceneRect());
     showMap_view->setRenderHint(QPainter::Antialiasing);
     showMap_view->setCacheMode(QGraphicsView::CacheBackground);
     showMap_view->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
@@ -61,6 +64,7 @@ MainWindow::MainWindow(QWidget *parent)
     printf("show map size: %f x %f\n", showMap_view->sceneRect().width(), showMap_view->sceneRect().height());
 
     videoFlight_view = new QGraphicsView(scene_videoFlight);
+    videoFlight_view->setSceneRect(scene->sceneRect());
     videoFlight_view->setRenderHint(QPainter::Antialiasing);
     videoFlight_view->setCacheMode(QGraphicsView::CacheBackground);
     videoFlight_view->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
@@ -163,6 +167,8 @@ MainWindow::MainWindow(QWidget *parent)
     showMap_view->hide();
     videoFlight_view->hide();
 
+    scene_videoBoot->setScaleToRect(targetSelect_view->sceneRect());
+    scene_videoFlight->setScaleToRect(targetSelect_view->sceneRect());
 
     QHBoxLayout *hlayout = new QHBoxLayout;
     hlayout->addLayout(leftButtonGroup);

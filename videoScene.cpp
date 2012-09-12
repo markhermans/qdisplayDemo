@@ -18,11 +18,21 @@ VideoScene::VideoScene(QWidget *parent, QString filename)
     bg = new QGraphicsPixmapItem(QPixmap(":/images/background_blk.jpg"));
     fg = new QGraphicsPixmapItem(QPixmap(":/images/adi_360_480.jpg"));
 
-    QGraphicsProxyWidget *videoProxy = new QGraphicsProxyWidget();
+    videoProxy = new QGraphicsProxyWidget();
     videoProxy->setWidget(m_VideoWidget);
 
     this->addItem(videoProxy);
 //    this->addWidget(m_VideoWidget);
+}
+
+void VideoScene::setScaleToRect(const QRectF & rect)
+{
+    qreal w = this->sceneRect().width();
+    qreal h = this->sceneRect().height();
+    qreal sf_x = rect.width()/w;
+    qreal sf_y = rect.height()/h;
+
+    videoProxy->scale(sf_x,sf_y);
 }
 
 void VideoScene::initialize()
