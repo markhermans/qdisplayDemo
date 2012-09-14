@@ -41,6 +41,7 @@
 //! [0]
 #include <QApplication>
 
+#include <QDesktopWidget>
 #include "mainwindow.h"
 
 int main(int argc, char *argv[])
@@ -57,8 +58,44 @@ int main(int argc, char *argv[])
 #else
     mainWin.show();
 #endif
-    mainWin.setGeometry(250,0,770,720);
-    printf("Window size: %d x %d\n", mainWin.width(), mainWin.height());
+    QDesktopWidget *qdw = app.desktop();
+    QRect rect = qdw->screenGeometry(0);
+    int dt_w = rect.width();
+    int dt_h = rect.height();
+    int mw_x = mainWin.geometry().x();
+    int mw_y = mainWin.geometry().y();
+    int mw_w = mainWin.geometry().width();
+    int mw_h = mainWin.geometry().height();
+    int cmw_x, cmw_y;
+
+    mw_w = 766;
+    mw_h = 720;
+    int diff_w = dt_w - mw_w;
+    int diff_h = dt_h - mw_h;
+
+    if (diff_w < 0 )
+    {
+        cmw_x = 0;
+    }
+    else
+    {
+        cmw_x = diff_w / 2;
+    }
+
+    if (diff_h < 0 )
+    {
+        cmw_y = 0;
+    }
+    else
+    {
+        cmw_y = diff_h / 2;
+    }
+
+
+    // center mainWin on desktop
+    mainWin.setGeometry(cmw_x, cmw_y, mw_w, mw_h);
+    printf("Screen size: %dx%d\n", dt_w, dt_h);
+    printf("Window position+size: %d,%d + %dx%d\n", cmw_x, cmw_y, mw_w, mw_h);
 
     return app.exec();
 }
