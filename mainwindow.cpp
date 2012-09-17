@@ -162,6 +162,8 @@ MainWindow::MainWindow(QWidget *parent)
     threadButton = new QPushButton(tr("&Start Thread"));
     connect(threadButton, SIGNAL(clicked()), this, SLOT(startOrStopThread()));
 
+    targetSelect_view->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    targetSelect_view->setMinimumSize(560,710);
     targetSelect_view->show();
     videoBoot_view->hide();
     showMap_view->hide();
@@ -172,11 +174,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     QHBoxLayout *hlayout = new QHBoxLayout;
     hlayout->addLayout(leftButtonGroup);
+
     hlayout->addWidget(targetSelect_view);
     hlayout->addWidget(videoBoot_view);
     hlayout->addWidget(showMap_view);
     hlayout->addWidget(videoFlight_view);
     hlayout->addLayout(rightButtonGroup);
+
     setLayout(hlayout);
 
     scene->initialize();
