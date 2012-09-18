@@ -25,14 +25,21 @@ VideoScene::VideoScene(QWidget *parent, QString filename)
 //    this->addWidget(m_VideoWidget);
 }
 
-void VideoScene::setScaleToRect(const QRectF & rect)
+void VideoScene::setScaleToRect(const QRectF & rect, qreal zoomX, qreal zoomY)
 {
     qreal w = this->sceneRect().width();
     qreal h = this->sceneRect().height();
-    qreal sf_x = rect.width()/w;
-    qreal sf_y = rect.height()/h;
+    qreal sf_x = rect.width()/w * zoomX;
+    qreal sf_y = rect.height()/h * zoomY;
 
-    videoProxy->scale(sf_x,sf_y);
+    printf("video %f x %f\n", w, h);
+    printf("rect  %f x %f\n", rect.width(), rect.height());
+    videoProxy->scale(sf_x,sf_x);
+}
+
+void VideoScene::setPos(qreal x, qreal y)
+{
+    videoProxy->setPos(x, y);
 }
 
 void VideoScene::initialize()

@@ -29,9 +29,9 @@ MainWindow::MainWindow(QWidget *parent)
     threadA.someMethod();
 
     TargetScene *scene = new TargetScene();
-    VideoScene *scene_videoBoot = new VideoScene(this, "./file.mp4");
+    VideoScene *scene_videoBoot = new VideoScene(this, "./bootVideo.mp4");
     MapScene *scene_mapShow = new MapScene("./file.jpg");
-    VideoScene *scene_videoFlight = new VideoScene(this, "./gitFile.mp4");
+    VideoScene *scene_videoFlight = new VideoScene(this, "./flightVideo.mp4");
 
     targetSelect_view = new QGraphicsView(scene);
     targetSelect_view->setSceneRect(scene->sceneRect());
@@ -169,8 +169,10 @@ MainWindow::MainWindow(QWidget *parent)
     showMap_view->hide();
     videoFlight_view->hide();
 
-    scene_videoBoot->setScaleToRect(targetSelect_view->sceneRect());
-    scene_videoFlight->setScaleToRect(targetSelect_view->sceneRect());
+    scene_videoBoot->setScaleToRect(targetSelect_view->sceneRect(), 1.4, 0.5);
+    scene_videoBoot->setPos(-195.0, 0.0);
+    scene_videoFlight->setScaleToRect(targetSelect_view->sceneRect(), 1.0, 1.0);
+    scene_videoFlight->setPos(0.0, 0.0);
 
     QHBoxLayout *hlayout = new QHBoxLayout;
     hlayout->addLayout(leftButtonGroup);
