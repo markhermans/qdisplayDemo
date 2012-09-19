@@ -73,7 +73,6 @@ MainWindow::MainWindow(QWidget *parent)
     videoFlight_view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     printf("video flight size: %f x %f\n", videoFlight_view->sceneRect().width(), videoFlight_view->sceneRect().height());
 
-    connect(this, SIGNAL(mainKeyPress()), scene, SLOT(doSymbolSelect()));
     connect(this, SIGNAL(playBootVideo()), scene_videoBoot, SLOT(play()));
     connect(this, SIGNAL(pauseBootVideo()), scene_videoBoot, SLOT(pause()));
     connect(this, SIGNAL(playFlightVideo()), scene_videoFlight, SLOT(play()));
@@ -83,7 +82,7 @@ MainWindow::MainWindow(QWidget *parent)
     QPushButton *videoBootButton = new QPushButton("1");
     QAction *videoBootAction = new QAction(tr("1"), this);
     videoBootAction->setShortcut(tr("j"));
-    connect(videoBootAction, SIGNAL(triggered()), this, SLOT(doVideoBoot()));
+    connect(videoBootAction, SIGNAL(triggered()), scene, SLOT(doSymbolSelect()));
     videoBootButton->addAction(videoBootAction);
 
     QPushButton *showMapButton = new QPushButton("3");
