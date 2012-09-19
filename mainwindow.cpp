@@ -16,8 +16,8 @@
 
 int selected_textID = 0;
 int selected_symID = 0;
-bool isTargetSelectVisible = true;
-bool isVideoBootVisible = false;
+bool isTargetSelectVisible = false;
+bool isVideoBootVisible = true;
 bool isShowMapVisible = false;
 bool isVideoFlightVisible = false;
 
@@ -164,15 +164,17 @@ MainWindow::MainWindow(QWidget *parent)
 
     targetSelect_view->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
     targetSelect_view->setMinimumSize(560,710);
-    targetSelect_view->show();
-    videoBoot_view->hide();
+    targetSelect_view->hide();
+    videoBoot_view->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    videoBoot_view->setMinimumSize(560,710);
+    videoBoot_view->show();
     showMap_view->hide();
     videoFlight_view->hide();
 
-    scene_videoBoot->setScaleToRect(targetSelect_view->sceneRect(), 1.4, 0.5);
-    scene_videoBoot->setPos(-195.0, 0.0);
-    scene_videoFlight->setScaleToRect(targetSelect_view->sceneRect(), 1.0, 1.0);
-    scene_videoFlight->setPos(0.0, 0.0);
+    scene_videoBoot->setScaleToRect(targetSelect_view->sceneRect(), 1.9, 1.2);
+    scene_videoBoot->setPos(-250.0, -75.0);
+//    scene_videoFlight->setScaleToRect(targetSelect_view->sceneRect(), 1.0, 1.0);
+//    scene_videoFlight->setPos(0.0, 0.0);
 
     QHBoxLayout *hlayout = new QHBoxLayout;
     hlayout->addLayout(leftButtonGroup);
@@ -187,6 +189,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     scene->initialize();
     scene_videoBoot->initialize();
+
+    emit playBootVideo();
 
 //    timer = new QTimer();
 //    connect(timer, SIGNAL(timeout()), this, SLOT(move()));
