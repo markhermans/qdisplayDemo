@@ -15,7 +15,8 @@ class VideoScene : public QGraphicsScene
 public:
     VideoScene(QWidget *parent, QString filename);
 
-    void setScaleToRect(const QRectF & rect);
+    void setScaleToRect(const QRectF & rect, qreal zoomX, qreal zoomY);
+    void setPos(qreal x, qreal y);
     void initialize();
 
 private slots:

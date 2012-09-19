@@ -68,8 +68,6 @@ int main(int argc, char *argv[])
     int mw_h = mainWin.geometry().height();
     int cmw_x, cmw_y;
 
-    mw_w = 766;
-    mw_h = 720;
     int diff_w = dt_w - mw_w;
     int diff_h = dt_h - mw_h;
 
@@ -94,8 +92,6 @@ int main(int argc, char *argv[])
 
     // center mainWin on desktop
     mainWin.setGeometry(cmw_x, cmw_y, mw_w, mw_h);
-    printf("Screen size: %dx%d\n", dt_w, dt_h);
-    printf("Window position+size: %d,%d + %dx%d\n", cmw_x, cmw_y, mw_w, mw_h);
 
     return app.exec();
 }

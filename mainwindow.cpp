@@ -16,8 +16,8 @@
 
 int selected_textID = 0;
 int selected_symID = 0;
-bool isTargetSelectVisible = true;
-bool isVideoBootVisible = false;
+bool isTargetSelectVisible = false;
+bool isVideoBootVisible = true;
 bool isShowMapVisible = false;
 bool isVideoFlightVisible = false;
 
@@ -29,9 +29,9 @@ MainWindow::MainWindow(QWidget *parent)
     threadA.someMethod();
 
     TargetScene *scene = new TargetScene();
-    VideoScene *scene_videoBoot = new VideoScene(this, "./file.mp4");
+    VideoScene *scene_videoBoot = new VideoScene(this, "./bootVideo.mp4");
     MapScene *scene_mapShow = new MapScene("./file.jpg");
-    VideoScene *scene_videoFlight = new VideoScene(this, "./gitFile.mp4");
+    VideoScene *scene_videoFlight = new VideoScene(this, "./flightVideo.mp4");
 
     targetSelect_view = new QGraphicsView(scene);
     targetSelect_view->setSceneRect(scene->sceneRect());
@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent)
     targetSelect_view->setDragMode(QGraphicsView::ScrollHandDrag);
     targetSelect_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     targetSelect_view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    printf("target select size: %f x %f\n", targetSelect_view->sceneRect().width(), targetSelect_view->sceneRect().height());
+//    printf("target select size: %f x %f\n", targetSelect_view->sceneRect().width(), targetSelect_view->sceneRect().height());
 
     videoBoot_view = new QGraphicsView(scene_videoBoot);
     videoBoot_view->setSceneRect(scene->sceneRect());
@@ -51,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent)
     videoBoot_view->setDragMode(QGraphicsView::ScrollHandDrag);
     videoBoot_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     videoBoot_view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    printf("video boot size: %f x %f\n", videoBoot_view->sceneRect().width(), videoBoot_view->sceneRect().height());
+//    printf("video boot size: %f x %f\n", videoBoot_view->sceneRect().width(), videoBoot_view->sceneRect().height());
 
     showMap_view = new QGraphicsView(scene_mapShow);
     showMap_view->setSceneRect(scene->sceneRect());
@@ -61,7 +61,7 @@ MainWindow::MainWindow(QWidget *parent)
     showMap_view->setDragMode(QGraphicsView::ScrollHandDrag);
     showMap_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     showMap_view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    printf("show map size: %f x %f\n", showMap_view->sceneRect().width(), showMap_view->sceneRect().height());
+//    printf("show map size: %f x %f\n", showMap_view->sceneRect().width(), showMap_view->sceneRect().height());
 
     videoFlight_view = new QGraphicsView(scene_videoFlight);
     videoFlight_view->setSceneRect(scene->sceneRect());
@@ -71,9 +71,8 @@ MainWindow::MainWindow(QWidget *parent)
     videoFlight_view->setDragMode(QGraphicsView::ScrollHandDrag);
     videoFlight_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     videoFlight_view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    printf("video flight size: %f x %f\n", videoFlight_view->sceneRect().width(), videoFlight_view->sceneRect().height());
+//    printf("video flight size: %f x %f\n", videoFlight_view->sceneRect().width(), videoFlight_view->sceneRect().height());
 
-    connect(this, SIGNAL(mainKeyPress()), scene, SLOT(doSymbolSelect()));
     connect(this, SIGNAL(playBootVideo()), scene_videoBoot, SLOT(play()));
     connect(this, SIGNAL(pauseBootVideo()), scene_videoBoot, SLOT(pause()));
     connect(this, SIGNAL(playFlightVideo()), scene_videoFlight, SLOT(play()));
@@ -83,7 +82,7 @@ MainWindow::MainWindow(QWidget *parent)
     QPushButton *videoBootButton = new QPushButton("1");
     QAction *videoBootAction = new QAction(tr("1"), this);
     videoBootAction->setShortcut(tr("j"));
-    connect(videoBootAction, SIGNAL(triggered()), this, SLOT(doVideoBoot()));
+    connect(videoBootAction, SIGNAL(triggered()), scene, SLOT(doSymbolSelect()));
     videoBootButton->addAction(videoBootAction);
 
     QPushButton *showMapButton = new QPushButton("3");
@@ -162,25 +161,35 @@ MainWindow::MainWindow(QWidget *parent)
     threadButton = new QPushButton(tr("&Start Thread"));
     connect(threadButton, SIGNAL(clicked()), this, SLOT(startOrStopThread()));
 
-    targetSelect_view->show();
-    videoBoot_view->hide();
+    targetSelect_view->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    targetSelect_view->setMinimumSize(560,710);
+    targetSelect_view->hide();
+    videoBoot_view->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    videoBoot_view->setMinimumSize(560,710);
+    videoBoot_view->show();
     showMap_view->hide();
     videoFlight_view->hide();
 
-    scene_videoBoot->setScaleToRect(targetSelect_view->sceneRect());
-    scene_videoFlight->setScaleToRect(targetSelect_view->sceneRect());
+    scene_videoBoot->setScaleToRect(targetSelect_view->sceneRect(), 1.9, 1.2);
+    scene_videoBoot->setPos(-250.0, -75.0);
+//    scene_videoFlight->setScaleToRect(targetSelect_view->sceneRect(), 1.0, 1.0);
+//    scene_videoFlight->setPos(0.0, 0.0);
 
     QHBoxLayout *hlayout = new QHBoxLayout;
     hlayout->addLayout(leftButtonGroup);
+
     hlayout->addWidget(targetSelect_view);
     hlayout->addWidget(videoBoot_view);
     hlayout->addWidget(showMap_view);
     hlayout->addWidget(videoFlight_view);
     hlayout->addLayout(rightButtonGroup);
+
     setLayout(hlayout);
 
     scene->initialize();
     scene_videoBoot->initialize();
+
+    emit playBootVideo();
 
 //    timer = new QTimer();
 //    connect(timer, SIGNAL(timeout()), this, SLOT(move()));
