@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent)
     targetSelect_view->setDragMode(QGraphicsView::ScrollHandDrag);
     targetSelect_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     targetSelect_view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    printf("target select size: %f x %f\n", targetSelect_view->sceneRect().width(), targetSelect_view->sceneRect().height());
+//    printf("target select size: %f x %f\n", targetSelect_view->sceneRect().width(), targetSelect_view->sceneRect().height());
 
     videoBoot_view = new QGraphicsView(scene_videoBoot);
     videoBoot_view->setSceneRect(scene->sceneRect());
@@ -51,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent)
     videoBoot_view->setDragMode(QGraphicsView::ScrollHandDrag);
     videoBoot_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     videoBoot_view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    printf("video boot size: %f x %f\n", videoBoot_view->sceneRect().width(), videoBoot_view->sceneRect().height());
+//    printf("video boot size: %f x %f\n", videoBoot_view->sceneRect().width(), videoBoot_view->sceneRect().height());
 
     showMap_view = new QGraphicsView(scene_mapShow);
     showMap_view->setSceneRect(scene->sceneRect());
@@ -61,7 +61,7 @@ MainWindow::MainWindow(QWidget *parent)
     showMap_view->setDragMode(QGraphicsView::ScrollHandDrag);
     showMap_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     showMap_view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    printf("show map size: %f x %f\n", showMap_view->sceneRect().width(), showMap_view->sceneRect().height());
+//    printf("show map size: %f x %f\n", showMap_view->sceneRect().width(), showMap_view->sceneRect().height());
 
     videoFlight_view = new QGraphicsView(scene_videoFlight);
     videoFlight_view->setSceneRect(scene->sceneRect());
@@ -71,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent)
     videoFlight_view->setDragMode(QGraphicsView::ScrollHandDrag);
     videoFlight_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     videoFlight_view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    printf("video flight size: %f x %f\n", videoFlight_view->sceneRect().width(), videoFlight_view->sceneRect().height());
+//    printf("video flight size: %f x %f\n", videoFlight_view->sceneRect().width(), videoFlight_view->sceneRect().height());
 
     connect(this, SIGNAL(playBootVideo()), scene_videoBoot, SLOT(play()));
     connect(this, SIGNAL(pauseBootVideo()), scene_videoBoot, SLOT(pause()));
